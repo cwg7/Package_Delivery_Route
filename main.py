@@ -333,7 +333,7 @@ def deliverPackages():
 
 def deliveryTruck1():
     currentAddress = hub
-    minDistance = 10000000
+    minDistance = 999999999
     truckMiles = 0
     numPackagesTruck1 = len(truck1)
 
