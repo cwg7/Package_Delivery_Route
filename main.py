@@ -161,7 +161,7 @@ distances2dArray = [
 #print(type(distances2dArray))
 
 
-hub = '4001 South 700 East'
+
 addressDictionary = {'4001 South 700 East': 0,
                '1060 Dalton Ave S': 1,
                '1330 2100 S': 2,
@@ -191,9 +191,12 @@ addressDictionary = {'4001 South 700 East': 0,
                '6351 South 900 East': 26
                      }
 
+hub = '4001 South 700 East'
+
+
 # need distance lookup function that takes two addresses and looks up distance between those
 
-def lookupDistance(address1,address2):
+def lookupDistance(address1: object, address2: object) -> object:
 
     row = addressDictionary[address1]
     column = addressDictionary[address2]
@@ -209,8 +212,10 @@ def lookupDistance(address1,address2):
 
 #truck1 = [p1.packageID,p13,p14,p15,p19,p16,p20,p29,p30,p31,p34,p37,p40]
 
-#truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
-truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
+
+
+
+#
 #truck1 = [p1.packageID,p13.packageID,p14.packageID,p15.packageID,p19.packageID,p16.packageID,p20.packageID,p29.packageID,p30.packageID,p31.packageID,p34.packageID,p37.packageID,p40.packageID]
 
 truck2 = [p3,p18,p36,p38,p6,p7,p36,p38,p2,p4,p5,p8,p9,p10,p11,p25]
@@ -219,14 +224,14 @@ truck3 = [p39,p35,p33,p27,p26,p24,p23,p22,p21,p17,p12]
 
 # truck3 = # rest of EOD packages to deliver
 
-numPackagesTruck1 = len(truck1)
+
 numPackagesTruck2 = len(truck2)
 numPackagesTruck3 = len(truck3)
 #print(len(truck1))
 #print(len(truck2))
 #print(len(truck3))
 
-packagesLeft = 40 - (numPackagesTruck1 + numPackagesTruck2 + numPackagesTruck3)
+
 
 #print(f"{'{:,.2f}'.format(packagesLeft)} packages left to deliver")
 
@@ -240,104 +245,24 @@ packagesLeft = 40 - (numPackagesTruck1 + numPackagesTruck2 + numPackagesTruck3)
 # For example, original location w/ a loaded truck is the hub. Once the first package is delivered ...
 # the function will take in the updated current address (the last package delivered + the next closest delivery address
 
-Truck1StartLocation = hub
-
-# for package in truck1:
-#     listOfDistances = [lookupDistance(hub,package.address)]
-#
-#     #print(listOfDistances)
-#
-#     print(sorted(listOfDistances))
-
-
-# numPackagesTruck1 = truck1.count()
-
-
-# def dispatchTruck1():
-#     for x in truck1:
-#         print(x.getPackageID())
-#         print(x.getAddress())
-#      miles = lookupDistance(hub,x.address)
-#     listOfMiles = []
-#     listOfMiles.append(miles)
-#     print(lookupDistance(hub,x.address))
-#     print(f"miles: {'{:,.2f}'.format(miles)}")
-#     print("\n")
-
-# def deliverFirstPackage():
-#     for x in truck1:
-#         lookupDistance(hub,x.address)
-#
-
-
-
-def dispatchTruck1():
-    for x in truck1:
-        print(x.getPackageID())
-        print(x.getAddress())
-        miles = lookupDistance(hub,x.address)
-        listOfMiles = []
-        listOfMiles.append(miles)
-        print(lookupDistance(hub,x.address))
-        print(f"miles: {'{:,.2f}'.format(miles)}")
-
-        minDistance = min(listOfMiles)
-        #print(listOfMiles)
-        print("\n")
-
-#dispatchTruck1()
-
-
-
-
-def sortTruck1():
-    distanceList = []
-    for packages in truck1:
-        distanceFromHub = lookupDistance(hub,packages.address)
-        distanceList.append(distanceFromHub)
-        #print(distanceList)
-        #sortedList = distanceList.sort()
-        minDistance = min(distanceList)
-        print(minDistance)
-
-
-
-def findMinDistance(currentDistance, destination):
-    for x in truck1:
-        lookupDistance()
 
 
 
 
 
-#sortTruck1()
 
 
-def deliverPackages():
-    numPackages = len(truck1)
-
-    while numPackages > 0:
-        print("There are packages left to deliver\n")
-        print(f"This many: {'{:,.2f}'.format(numPackages)}")
-        numPackages -=1
-
-#deliverPackages()
-
-
-#Don/t do list of miles (distances)
-
-#loop through packages on the truck, and get the distance
-
-# need a min value search
-# create a variable called minDistance -> see if
+truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
+hub = '4001 South 700 East'
 
 def deliveryTruck1():
     currentAddress = hub
-    minDistance = 999999999
+    minDistance = 9999999
     truckMiles = 0
-    numPackagesTruck1 = len(truck1)
 
-    while numPackagesTruck1 > 0:
+
+    while len(truck1) > 0:
+        minDistance = 9999999
 
         for packageID in truck1:
             package = packageHashTable.search(packageID)
@@ -349,21 +274,20 @@ def deliveryTruck1():
                 minPackage = package
 
 
-
-        truckMiles += distance
+        truckMiles += minDistance
         currentAddress = minPackage.address
-        #print(packageID)
+        truck1.remove(minPackage.packageID)
+        #packageHashTable.remove(package)
 
 
-        #truck1.remove(packageID)
-
-    # if numPackagesTruck1 == 0:
-    #     distanceToHub = lookupDistance(currentAddress,hub)
-    #     truckMiles += distanceToHub
+        print(f"Current truck address: {'{}'.format(minPackage.address)}")
+        print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
 
 
-    print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}")
-    print("All packages have been delievered")
+    distanceToHub = lookupDistance(currentAddress,hub)
+    truckMiles += distanceToHub
+    print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
 
         # deliver minPackage
         # update totMiles on truck1 w/ minDistance variable
@@ -372,10 +296,10 @@ def deliveryTruck1():
 
 
 
-
-            #print(lookupDistance(currentAddress,packageID.))
-#deliveryTruck1()
-
+print("\n\n")
+deliveryTruck1()
 
 
-print('update test')
+
+
+
