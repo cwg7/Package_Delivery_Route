@@ -199,7 +199,7 @@ def lookupDistance(address1: object, address2: object) -> object:
 
 
 
-truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month, datetime.date.today().day, 8, 00, 00, 00)
+
 
 
 
@@ -217,6 +217,8 @@ def deliveryTruck1():
     currentAddress = hub
     minDistance = 9999999
     truckMiles = 0
+    truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
+                                        datetime.date.today().day, 8, 00, 00, 00)
 
 
     while len(truck1) > 0:
@@ -232,7 +234,7 @@ def deliveryTruck1():
                 minPackage = package
 
         deliveryTime = datetime.timedelta(minutes=+(minDistance / .3))
-        truck1ArrivalTime = truck1StartTime + deliveryTime
+        timeAtDelivery = truck1StartTime + deliveryTime
         truckMiles += minDistance
         currentAddress = minPackage.address
         truck1.remove(minPackage.packageID)
@@ -240,19 +242,27 @@ def deliveryTruck1():
 
 
 
+
+
         print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
-        #print(f"Delivery time: {'{:,.2f}'.format(truck1ArrivalTime)}")
+        #print(f"Delivery time: {'{:,.2f}'.format(timeAtDelivery)}")
         #print(deliveryTime)
-        print(f"Delivery time: {truck1ArrivalTime:%Y-%m-%d %H:%M}")
-        #print(truck1ArrivalTime)
+        print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
+        #print(timeAtDelivery)
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
+        truck1StartTime = timeAtDelivery
 
 
 
-    #truck1StartTime = truck1ArrivalTime
+
+
+
+    #truck1StartTime = timeAtDelivery
     distanceToHub = lookupDistance(currentAddress,hub)
     truckMiles += distanceToHub
+
+
 
     print("Truck 1 is empty and back at hub\n")
     print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
