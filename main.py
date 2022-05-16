@@ -1,7 +1,6 @@
 from Package import Package
 from HashTable import HashTable
 import datetime
-
 import math
 
 
@@ -49,8 +48,6 @@ p40 = Package(40,'380 W 2880 S','Salt Lake City','UT',84115,'10:30 AM',45,'')
 
 packageHashTable = HashTable()
 
-
-
 packageHashTable.insert(1, p1)
 packageHashTable.insert(2, p2)
 packageHashTable.insert(3, p3)
@@ -91,9 +88,6 @@ packageHashTable.insert(37, p37)
 packageHashTable.insert(38, p38)
 packageHashTable.insert(39, p39)
 packageHashTable.insert(40, p40)
-
-#value = packageHashTable.search(25)
-#print(value)
 
 
 
@@ -205,7 +199,7 @@ def lookupDistance(address1: object, address2: object) -> object:
 
 
 
-
+truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month, datetime.date.today().day, 8, 00, 00, 00)
 
 
 
@@ -213,6 +207,7 @@ def lookupDistance(address1: object, address2: object) -> object:
 # TRUCK SPEED   -->> 18mph is equivalent to 0.3 miles / minute
 
 totalMilesAllTrucks = 0
+
 
 
 truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
@@ -236,17 +231,26 @@ def deliveryTruck1():
                 minDistance = distance
                 minPackage = package
 
-
+        deliveryTime = datetime.timedelta(minutes=+(minDistance / .3))
+        truck1ArrivalTime = truck1StartTime + deliveryTime
         truckMiles += minDistance
         currentAddress = minPackage.address
         truck1.remove(minPackage.packageID)
 
 
+
+
         print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
+        #print(f"Delivery time: {'{:,.2f}'.format(truck1ArrivalTime)}")
+        #print(deliveryTime)
+        print(f"Delivery time: {truck1ArrivalTime:%Y-%m-%d %H:%M}")
+        #print(truck1ArrivalTime)
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
 
 
+
+    #truck1StartTime = truck1ArrivalTime
     distanceToHub = lookupDistance(currentAddress,hub)
     truckMiles += distanceToHub
 
