@@ -279,9 +279,8 @@ def deliveryTruck1():
         truck1.remove(minPackage.packageID)
         #packageHashTable.remove(package)
 
-
-        print(f"Current truck address: {'{}'.format(minPackage.address)}")
         print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
 
 
