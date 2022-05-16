@@ -286,7 +286,9 @@ def deliveryTruck1():
 
     distanceToHub = lookupDistance(currentAddress,hub)
     truckMiles += distanceToHub
+    print("Truck 1 is empty and back at hub\n")
     print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
+
 
         # deliver minPackage
         # update totMiles on truck1 w/ minDistance variable
@@ -296,9 +298,58 @@ def deliveryTruck1():
 
 
 print("\n\n")
+print(f"TRUCK 1 DELIVERIES:\n\n")
 deliveryTruck1()
+print("_______________________________________________________________________________________________________________")
+print("_______________________________________________________________________________________________________________\n")
 
 
+truck2 = [3,18,36,38,6,7,36,38,2,4,5,8,9,10,11,25]
+hub = '4001 South 700 East'
+
+def deliveryTruck2():
+    currentAddress = hub
+    minDistance = 9999999
+    truckMiles = 0
+
+
+    while len(truck2) > 0:
+        minDistance = 9999999
+
+        for packageID in truck2:
+            package = packageHashTable.search(packageID)
+            distance = lookupDistance(currentAddress,package.address)
+
+
+            if distance < minDistance:
+                minDistance = distance
+                minPackage = package
+
+
+        truckMiles += minDistance
+        currentAddress = minPackage.address
+        truck2.remove(minPackage.packageID)
+        #packageHashTable.remove(package)
+
+        print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
+        print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
+
+
+    distanceToHub = lookupDistance(currentAddress,hub)
+    truckMiles += distanceToHub
+    print("Truck 2 is empty and back at hub\n")
+    print(f"Total miles on truck 2: {'{:,.2f}'.format(truckMiles)}\n")
+
+
+        # deliver minPackage
+        # update totMiles on truck1 w/ minDistance variable
+        # currentAddress = delivery address of minPackage
+        # remove packageID from truck list
+
+
+print(f"TRUCK 2 DELIVERIES:\n\n")
+deliveryTruck2()
 
 
 
