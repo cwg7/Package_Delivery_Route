@@ -152,11 +152,6 @@ distances2dArray = [
      3.1, 7.8, 1.3, 8.3, 0]
 ]
 
-#print(len(distances2dArray))
-#print(type(distances2dArray))
-
-
-
 addressDictionary = {'4001 South 700 East': 0,
                '1060 Dalton Ave S': 1,
                '1330 2100 S': 2,
@@ -198,22 +193,14 @@ def lookupDistance(address1: object, address2: object) -> object:
     distanceAtRowAndColumn = distances2dArray[row][column]
     return distanceAtRowAndColumn
 
-
-
-
-
-
-
-
 # TRUCK SPEED   -->> 18mph is equivalent to 0.3 miles / minute
-
-totalMilesAllTrucks = 0
 
 
 
 truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
 hub = '4001 South 700 East'
 
+totMilesAllTrucks = 0
 def deliveryTruck1():
     currentAddress = hub
     minDistance = 9999999
@@ -260,14 +247,32 @@ def deliveryTruck1():
 
 
     #truck1StartTime = timeAtDelivery
-    distanceToHub = lookupDistance(currentAddress,hub)
-    truckMiles += distanceToHub
-    #timeToHub = datetime.timedelta(minutes=+(minDistance / .3))
+    distanceToHub = lookupDistance(minPackage.address,hub)
+    totMilesTruck1 = truckMiles + distanceToHub
+    returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
+    hubArrivalTime = truck1StartTime + returnTime
 
 
 
+
+
+
+
+
+
+
+    print(f"Total miles on truck 1 before trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
     print("Truck 1 is empty and back at hub\n")
-    print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
+    print(f"Truck 1 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
+    print(f"Total miles on truck 1 AFTER trip back to hub: {'{:,.2f}'.format(totMilesTruck1)}\n")
+
+
+    # print(f"distance to hub: {'{:,.2f}'.format(distanceToHub)}")
+    # #print(f"Return time: '{'{:,}'.format(returnTime)}\n")
+    # print("Return time:")
+    # print(returnTime)
+    # print(hubArrivalTime)
+    #
 
 
 
@@ -371,6 +376,8 @@ def deliveryTruck3():
     print(f"Total miles on truck 3: {'{:,.2f}'.format(truckMiles)}\n")
 
 
+
 print(f"TRUCK 3 DELIVERIES:\n\n")
 deliveryTruck3()
+
 
