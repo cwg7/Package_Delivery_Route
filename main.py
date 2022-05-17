@@ -13,7 +13,7 @@ p5 = Package(5,'410 S State St','Salt Lake City','UT',84111,'EOD',5,'')
 p6 = Package(6,'3060 Lester St','West Valley City','UT',84119,'10:30 AM',88,'Delayed on flight---will not arrive to depot until 9:05 am')
 p7 = Package(7,'1330 2100 S','Salt Lake City','UT',84103,'EOD',9,'')
 p8 = Package(8,'300 State St','Salt Lake City','UT',84103,'EOD',9,'')
-p9 = Package(9,'300 State St','Salt Lake City','UT',84103,'EOD',2,'Wrong address listed')
+p9 = Package(9,'410 S State St','Salt Lake City','UT',84111,'EOD',2,'Wrong address listed')
 p10 = Package(10,'600 E 900 South','Salt Lake City','UT',84105,'EOD',1,'')
 p11 = Package(11,'2600 Taylorsville Blvd','Salt Lake City','UT',84118,'EOD',1,'')
 p12 = Package(12,'3575 W Valley Central Station bus Loop','West Valley City','UT',84119,'EOD',1,'')
@@ -45,6 +45,7 @@ p37 = Package(37,'410 S State St','Salt Lake City','UT',84111,'10:30 AM',2,'')
 p38 = Package(38,'410 S State St','Salt Lake City','UT',84111,'EOD',9,'Can only be on truck 2')
 p39 = Package(39,'2010 W 500 S','Salt Lake City','UT',84104,'EOD',9,'')
 p40 = Package(40,'380 W 2880 S','Salt Lake City','UT',84115,'10:30 AM',45,'')
+
 
 packageHashTable = HashTable()
 
@@ -244,7 +245,7 @@ def deliveryTruck1():
 
 
 
-        print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
         #print(f"Delivery time: {'{:,.2f}'.format(timeAtDelivery)}")
         #print(deliveryTime)
@@ -278,7 +279,7 @@ print("_________________________________________________________________________
 print("_______________________________________________________________________________________________________________\n")
 
 
-truck2 = [3,18,38,6,7,36,2,4,5,8,9,10,11,25]
+truck2 = [3,18,38,6,7,36,2,4,5,8,10,11,25]
 hub = '4001 South 700 East'
 
 def deliveryTruck2():
@@ -309,7 +310,7 @@ def deliveryTruck2():
         truck2.remove(minPackage.packageID)
 
 
-        print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
         print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
@@ -331,13 +332,15 @@ deliveryTruck2()
 print(f"______________________________________________________________________________________________________________")
 print(f"_____________________________________________________________________________________________________________\n")
 
-truck3 = [39,35,33,27,26,24,23,22,21,17,12,28,32]
+truck3 = [39,9,35,33,27,26,24,23,22,21,17,12,28,32]
 hub = '4001 South 700 East'
 
 def deliveryTruck3():
     currentAddress = hub
     minDistance = 9999999
     truckMiles = 0
+    truck3StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
+                                        datetime.date.today().day, 10, 20, 00, 00)
 
     while len(truck3) > 0:
         minDistance = 9999999
@@ -350,13 +353,17 @@ def deliveryTruck3():
                 minDistance = distance
                 minPackage = package
 
+        deliveryTime = datetime.timedelta(minutes=+(minDistance / .3))
+        timeAtDelivery = truck3StartTime + deliveryTime
         truckMiles += minDistance
         currentAddress = minPackage.address
         truck3.remove(minPackage.packageID)
 
-        print(f"Current Package ID: {'{:,.2f}'.format(minPackage.packageID)}")
+        print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
+        print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
         print(f"Total miles on truck 3: {'{:,.2f}'.format(truckMiles)}\n")
+        truck3StartTime = timeAtDelivery
 
     distanceToHub = lookupDistance(currentAddress, hub)
     truckMiles += distanceToHub
