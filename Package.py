@@ -12,6 +12,8 @@ class Package:
         self.delivery_time = None
         self.time_left_hub = None
 
+        self.status = ''
+
 
 
         #If I add this attribute, I need to update my package objects that I'm inserting to the hashtable
