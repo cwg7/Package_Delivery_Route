@@ -201,12 +201,17 @@ truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
 hub = '4001 South 700 East'
 
 totMilesAllTrucks = 0
+
 def deliveryTruck1():
     currentAddress = hub
     minDistance = 9999999
     truckMiles = 0
     truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
                                         datetime.date.today().day, 8, 00, 00, 00)
+
+    for packageID in truck1:
+        package = packageHashTable.search(packageID)
+        package.time_left_hub = truck1StartTime
 
 
     while len(truck1) > 0:
@@ -222,28 +227,18 @@ def deliveryTruck1():
                 minPackage = package
 
         deliveryTime = datetime.timedelta(minutes=+(minDistance / .3))
+        minPackage.delivery_time = deliveryTime
+
         timeAtDelivery = truck1StartTime + deliveryTime
         truckMiles += minDistance
         currentAddress = minPackage.address
         truck1.remove(minPackage.packageID)
 
-
-
-
-
-
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
-        #print(f"Delivery time: {'{:,.2f}'.format(timeAtDelivery)}")
-        #print(deliveryTime)
         print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
-        #print(timeAtDelivery)
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
         truck1StartTime = timeAtDelivery
-
-
-
-
 
 
     #truck1StartTime = timeAtDelivery
@@ -253,18 +248,12 @@ def deliveryTruck1():
     hubArrivalTime = truck1StartTime + returnTime
 
 
-
-
-
-
-
-
-
-
     print(f"Total miles on truck 1 before trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
     print("Truck 1 is empty and back at hub\n")
     print(f"Truck 1 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
     print(f"Total miles on truck 1 AFTER trip back to hub: {'{:,.2f}'.format(totMilesTruck1)}\n")
+
+    return totMilesTruck1
 
 
     # print(f"distance to hub: {'{:,.2f}'.format(distanceToHub)}")
@@ -279,7 +268,11 @@ def deliveryTruck1():
 
 print("\n\n")
 print(f"TRUCK 1 DELIVERIES:\n\n")
+
 deliveryTruck1()
+
+#totalTruck1Miles = deliveryTruck1()
+
 print("_______________________________________________________________________________________________________________")
 print("_______________________________________________________________________________________________________________\n")
 
@@ -314,25 +307,34 @@ def deliveryTruck2():
         currentAddress = minPackage.address
         truck2.remove(minPackage.packageID)
 
+        distanceToHub = lookupDistance(minPackage.address, hub)
+        totMilesTruck2 = truckMiles + distanceToHub
+        returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
+        hubArrivalTime = truck2StartTime + returnTime
 
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
         print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
-        print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
+        print(f"Total miles on truck 2: {'{:,.2f}'.format(totMilesTruck2)}\n")
         truck2StartTime = timeAtDelivery
 
 
-    distanceToHub = lookupDistance(currentAddress,hub)
-    truckMiles += distanceToHub
-    print("Truck 2 is empty and back at hub\n")
-    print(f"Total miles on truck 2: {'{:,.2f}'.format(truckMiles)}\n")
 
 
+    print(f"Total miles on truck 2 BEFORE trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
+    print("Truck 2 is empty and back at the hub \n")
+    print(f"Truck 2 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
+    print(f"Total miles on truck 2 AFTER trip back to hub: {'{:,.2f}'.format(totMilesTruck2)}\n")
+
+    return totMilesTruck2
 
 
 
 print(f"TRUCK 2 DELIVERIES:\n\n")
+
 deliveryTruck2()
+
+#totalTruck2Miles = deliveryTruck2()
 
 print(f"______________________________________________________________________________________________________________")
 print(f"_____________________________________________________________________________________________________________\n")
@@ -364,20 +366,55 @@ def deliveryTruck3():
         currentAddress = minPackage.address
         truck3.remove(minPackage.packageID)
 
+        distanceToHub = lookupDistance(minPackage.address, hub)
+        totMilesTruck3 = truckMiles + distanceToHub
+        returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
+        hubArrivalTime = truck3StartTime + returnTime
+
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
         print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
         print(f"Total miles on truck 3: {'{:,.2f}'.format(truckMiles)}\n")
         truck3StartTime = timeAtDelivery
 
-    distanceToHub = lookupDistance(currentAddress, hub)
-    truckMiles += distanceToHub
-    print("Truck 3 is empty and back at hub\n")
-    print(f"Total miles on truck 3: {'{:,.2f}'.format(truckMiles)}\n")
 
 
+    print(f"Total miles on truck 3 BEFORE trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
+    print("Truck 3 is empty and back at the hub \n")
+    print(f"Truck 3 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
+    print(f"Total miles on truck 3 AFTER trip back to hub: {'{:,.2f}'.format(totMilesTruck3)}\n")
+
+    return totMilesTruck3
 
 print(f"TRUCK 3 DELIVERIES:\n\n")
+
 deliveryTruck3()
 
+#totalTruck3Miles = deliveryTruck3()
 
+#totMilesEndDay = deliveryTruck1() + deliveryTruck2() + deliveryTruck3()
+
+
+
+
+#finalTotMiles = totalTruck1Miles + totalTruck2Miles + totalTruck3Miles
+
+print(f"______________________________________________________________________________________________________________")
+print(f"_____________________________________________________________________________________________________________\n")
+
+#print(f"Total miles on all trucks combined at end of day: {'{:,.2f}'.format(finalTotMiles)}")
+# output all packages from 1 to 40
+
+for i in range(1,41):
+    package = packageHashTable.search(i)
+    print(package)
+
+
+
+    #print status
+
+# LOOK AT TIME LEFT HUB AND DELIVERY TIME RELATIVE TO USER INPUT
+# PRINT OUT STATUS 'AT HUB, EN ROUTE, OR DELIVERED
+#
+
+#def package_status(userInputTime):
