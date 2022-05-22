@@ -19,7 +19,7 @@ class HashTable:
         bucket_list.append(item)
     '''
 
-    def insert(self, key, item):  # does both insert and update
+    def insert(self, key, item):  # does both insert and update. Time complexity is O(1)
         # get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
@@ -57,7 +57,7 @@ class HashTable:
     '''
 
     def search(self, key):
-        # get the bucket list where this key would be.
+        # get the bucket list where this key would be. Time complexity is O(N)
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
         # print(bucket_list)
@@ -82,11 +82,11 @@ class HashTable:
     '''
 
     def remove(self, key):
-        # get the bucket list where this item will be removed from.
+        # get the bucket list where this item will be removed from.  Time complexity is O(1)
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
-        # remove the item from the bucket list if it is present.
+        # removes the item from the bucket list if it is present.
         for kv in bucket_list:
             # print (key_value)
             if kv[0] == key:
