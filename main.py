@@ -1,7 +1,8 @@
 from Package import Package
 from HashTable import HashTable
 import datetime
-import math
+
+
 
 
 
@@ -46,6 +47,8 @@ p38 = Package(38,'410 S State St','Salt Lake City','UT',84111,'EOD',9,'Can only 
 p39 = Package(39,'2010 W 500 S','Salt Lake City','UT',84104,'EOD',9,'')
 p40 = Package(40,'380 W 2880 S','Salt Lake City','UT',84115,'10:30 AM',45,'')
 
+
+# The space complexity for this hash table is O(n)
 
 packageHashTable = HashTable()
 
@@ -93,7 +96,7 @@ packageHashTable.insert(40, p40)
 
 
 
-# I think both space complexity and time complexity is O(n^2) for this 2d array
+# The space complexity and time complexity is O(n^2) for this 2d array
 
 distances2dArray = [
     [0, 7.2, 3.8, 11, 2.2, 3.5, 10.9, 8.6, 7.6, 2.8, 6.4, 3.2, 7.6, 5.2, 4.4, 3.7, 7.6, 2, 3.6, 6.5, 1.9, 3.4, 2.4, 6.4,
@@ -152,6 +155,8 @@ distances2dArray = [
      3.1, 7.8, 1.3, 8.3, 0]
 ]
 
+# The space complexity for this dictionary is O(n)
+
 addressDictionary = {'4001 South 700 East': 0,
                '1060 Dalton Ave S': 1,
                '1330 2100 S': 2,
@@ -184,7 +189,8 @@ addressDictionary = {'4001 South 700 East': 0,
 hub = '4001 South 700 East'
 
 
-# need distance lookup function that takes two addresses and looks up distance between those
+
+# The time complexity for this function is O(n) because it uses a dictionary
 
 def lookupDistance(address1: object, address2: object) -> object:
 
@@ -193,90 +199,11 @@ def lookupDistance(address1: object, address2: object) -> object:
     distanceAtRowAndColumn = distances2dArray[row][column]
     return distanceAtRowAndColumn
 
-# TRUCK SPEED   -->> 18mph is equivalent to 0.3 miles / minute
-
-
 
 truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
 hub = '4001 South 700 East'
 
-
-
-# def deliveryTruck1():
-#     currentAddress = hub
-#     minDistance = 9999999
-#     truckMiles = 0
-#     truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
-#                                         datetime.date.today().day, 8, 00, 00, 00)
-#     currentTime = truck1StartTime
-#
-#     for packageID in truck1:
-#         package = packageHashTable.search(packageID)
-#         package.time_left_hub = truck1StartTime
-#
-#
-#     while len(truck1) > 0:
-#         minDistance = 9999999
-#
-#         for packageID in truck1:
-#             package = packageHashTable.search(packageID)
-#             distance = lookupDistance(currentAddress,package.address)
-#
-#
-#             if distance < minDistance:
-#                 minDistance = distance
-#                 minPackage = package
-#
-#         deltaTime = datetime.timedelta(minutes=+(minDistance / .3))
-#
-#         currentTime += deltaTime
-#
-#         minPackage.delivery_time = currentTime
-#
-#         timeAtDelivery = truck1StartTime + deltaTime
-#
-#         truckMiles += minDistance
-#         currentAddress = minPackage.address
-#         truck1.remove(minPackage.packageID)
-#
-#         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
-#         print(f"Current truck address (Delivery address for current package): {'{}'.format(minPackage.address)}")
-#         print(f"Delivery time: {timeAtDelivery:%Y-%m-%d %H:%M}")
-#         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
-#
-#         #truck1StartTime = timeAtDelivery
-#
-#
-#     #truck1StartTime = timeAtDelivery
-#     distanceToHub = lookupDistance(minPackage.address,hub)
-#     totMilesTruck1 = truckMiles + distanceToHub
-#     returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
-#     hubArrivalTime = currentTime + returnTime
-#
-#
-#     print(f"Total miles on truck 1 before trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
-#     print("Truck 1 is empty and back at hub\n")
-#     print(f"Truck 1 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
-#     print(f"Total miles on truck 1 AFTER trip back to hub: {'{:,.2f}'.format(totMilesTruck1)}\n")
-#
-#     return totMilesTruck1
-#
-#
-#     # print(f"distance to hub: {'{:,.2f}'.format(distanceToHub)}")
-#     # #print(f"Return time: '{'{:,}'.format(returnTime)}\n")
-#     # print("Return time:")
-#     # print(returnTime)
-#     # print(hubArrivalTime)
-#     #
-#
-#
-# print("\n\n")
-# print(f"TRUCK 1 DELIVERIES:\n\n")
-#
-# #deliveryTruck1()
-#
-# totalTruck1Miles = deliveryTruck1()
-
+# The time complexity for this function is O(n^2)
 
 def deliveryTruck1():
     currentAddress = hub
@@ -289,6 +216,10 @@ def deliveryTruck1():
     for packageID in truck1:
         package = packageHashTable.search(packageID)
         package.time_left_hub = truck1StartTime
+
+        #package.status = 'en route'
+        #                 'at hub'
+        #                  'delivered'
 
 
     while len(truck1) > 0:
@@ -347,6 +278,8 @@ print("_________________________________________________________________________
 
 truck2 = [3,18,38,6,7,36,2,4,5,8,10,11,25]
 hub = '4001 South 700 East'
+
+# The time complexity for this function is O(n^2)
 
 def deliveryTruck2():
     currentAddress = hub
@@ -421,6 +354,8 @@ print(f"________________________________________________________________________
 truck3 = [39,9,35,33,27,26,24,23,22,21,17,12,28,32]
 hub = '4001 South 700 East'
 
+# The time complexity for this function is O(n^2)
+
 def deliveryTruck3():
     currentAddress = hub
     minDistance = 9999999
@@ -475,7 +410,7 @@ def deliveryTruck3():
 
     return totMilesTruck3
 
-print(f"TRUCK 3 DELIVERIES:\n\n")
+print(f"TRUCK 3 DELIVERIES:\n")
 
 
 totalTruck3Miles = deliveryTruck3()
@@ -493,6 +428,11 @@ print("_________________________________________________________________________
 print("_______________________________________________________________________________________________________________\n")
 # output all packages from 1 to 40
 
+print("Package ID    Address        City        State    Zip    Deadline     Weight    Notes     Delivery Time      Time Left Hub")
+print("___________________________________________________________________________________________________________________________")
+
+# The time complexity here is O(n)
+
 for i in range(1,41):
     package = packageHashTable.search(i)
     print(package)
@@ -506,3 +446,7 @@ for i in range(1,41):
 #
 
 #def package_status(userInputTime):
+
+#userTimeInput =
+
+#Compare user time with
