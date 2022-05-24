@@ -221,13 +221,6 @@ def deliveryTruck1():
         package.time_left_hub = truck1StartTime
 
 
-
-
-        #package.status = 'en route'
-        #                 'at hub'
-        #                  'delivered'
-
-
     while len(truck1) > 0:
         minDistance = 9999999
 
@@ -251,7 +244,7 @@ def deliveryTruck1():
         minPackage.delivery_time = timeAtDelivery
 
 
-        minPackage.status = 'delivered'
+        #minPackage.status = 'delivered'
 
 
 
@@ -260,7 +253,7 @@ def deliveryTruck1():
         truckMiles += minDistance
         currentAddress = minPackage.address
 
-        #minPackage.status = 'delivered'
+
         truck1.remove(minPackage.packageID)
 
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
