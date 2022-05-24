@@ -2,7 +2,10 @@ from Package import Package
 from HashTable import HashTable
 import datetime
 
-
+print("\n\n")
+print(f"Welcome to the WGUPS Package Delivery Route Optimizer!")
+print("Please scroll to the bottom for user options")
+print(f"Here is a simulation of all deliveries for today:")
 
 
 
@@ -217,6 +220,9 @@ def deliveryTruck1():
         package = packageHashTable.search(packageID)
         package.time_left_hub = truck1StartTime
 
+
+
+
         #package.status = 'en route'
         #                 'at hub'
         #                  'delivered'
@@ -226,8 +232,12 @@ def deliveryTruck1():
         minDistance = 9999999
 
         for packageID in truck1:
+
             package = packageHashTable.search(packageID)
             distance = lookupDistance(currentAddress,package.address)
+
+
+
 
 
             if distance < minDistance:
@@ -241,9 +251,16 @@ def deliveryTruck1():
         minPackage.delivery_time = timeAtDelivery
 
 
+        minPackage.status = 'delivered'
+
+
+
+
 
         truckMiles += minDistance
         currentAddress = minPackage.address
+
+        #minPackage.status = 'delivered'
         truck1.remove(minPackage.packageID)
 
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
@@ -291,6 +308,9 @@ def deliveryTruck2():
     for packageID in truck2:
         package = packageHashTable.search(packageID)
         package.time_left_hub = truck2StartTime
+
+
+
 
     while len(truck2) > 0:
         minDistance = 9999999
@@ -450,3 +470,68 @@ for i in range(1,41):
 #userTimeInput =
 
 #Compare user time with
+
+print(f"\n\n\n")
+
+userInput = input("Press 1 to check shipping status of all packages at a given time.\n"
+                  #"Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
+                  "Or press 0 to close the program\n")
+
+if userInput == '1':
+
+    hourInput = int(input("Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
+                          "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
+
+    if hourInput < 8:
+        print("Deliveries don't start until 8:00 am")
+    elif hourInput > 17:
+        print("Hour selected is outside of business hours\n")
+        print(f"Please select an hour between 8am and 5pm")
+
+    elif hourInput >= 8 & hourInput <= 17:
+
+        print(f"Okay. here is the hour you entered: {'{:}'.format(hourInput)}")
+        minuteInput = int(input("Please enter a minute between 0 and 59\n"))
+
+        if minuteInput >=0 & minuteInput >= 59:
+
+            print(f"Okay. here is the minute you entered which corresponds with the selected hour: {'{:}'.format(minuteInput)}")
+        else:
+            print("Please enter a minute between 0 and 59 which corresponds with the selected hour")
+
+        #militaryTime = str(hourInput + minuteInput)
+        #print(militaryTime)
+        inputTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
+                                        datetime.date.today().day, hourInput, minuteInput, 00, 00)
+
+        print(f"Excellent. User-time selected. Searching for delivery status of all packages at {'{:}'.format(inputTime)}\n")
+
+
+        for i in range(1, 41):
+            package = packageHashTable.search(i)
+
+            if inputTime < package.time_left_hub:
+                package.status = 'at hub'
+            elif inputTime > package.time_left_hub and inputTime < package.delivery_time:
+                package.status = 'en route'
+            elif inputTime > package.delivery_time:
+                package.status = 'delivered'
+
+            # elif package.delivery_time < inputTime & package.time_left_hub:
+            #     package.status = 'en route'
+
+            print(f"Time:  {'{:}'.format(inputTime)}")
+            print(f"Package ID        Delivery Status")
+            print(f"______________________________________")
+
+            print(f"{'{:,}'.format(package.packageID)}: "+ "               " + package.status)
+            print(f"______________________________________")
+            print(f"______________________________________\n")
+            #print(package.status)
+
+if userInput == '0':
+    print("Goodbye")
+    exit()
+
+else:
+    "Sorry, incorrect selection. Please read the prompt again.\n"
