@@ -3,9 +3,9 @@ from HashTable import HashTable
 import datetime
 
 print("\n\n")
-print(f"Welcome to the WGUPS Package Delivery Route Optimizer!")
-print("Please scroll to the bottom for user options")
-print(f"Here is a simulation of all deliveries for today:")
+print(f"Welcome to the WGUPS Package Delivery Route Optimizer!\n")
+print("Please scroll to the bottom for user options\n")
+print(f"Here is a simulation of all deliveries for today:\n")
 
 
 
@@ -485,22 +485,30 @@ if userInput == '1':
     hourInput = int(input("Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
                           "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
 
-    if hourInput < 8:
-        print("Deliveries don't start until 8:00 am")
-    elif hourInput > 17:
-        print("Hour selected is outside of business hours\n")
-        print(f"Please select an hour between 8am and 5pm")
+    while hourInput < 8 or hourInput >= 17:
+        hourInput = int(input("Sorry. Incorrect selection. Business hours are 8am - 5pm. Please select an hour during business hours (ie 8-16)\n"))
 
-    elif hourInput >= 8 & hourInput <= 17:
+    # if hourInput < 8:
+    #     print("Deliveries don't start until 8:00 am")
+    # elif hourInput > 17:
+    #     print("Hour selected is outside of business hours\n")
+    #     print(f"Please select an hour between 8am and 5pm")
+
+    #elif hourInput >= 8 & hourInput <= 17:
+    if hourInput >= 8 & hourInput < 17:
 
         print(f"Okay. here is the hour you entered: {'{:}'.format(hourInput)}")
         minuteInput = int(input("Please enter a minute between 0 and 59\n"))
 
-        if minuteInput >=0 & minuteInput >= 59:
+        while minuteInput < 0 or minuteInput > 59:
+            minuteInput = int(input(
+                "Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour\n"))
+
+        if minuteInput >=0 & minuteInput <= 59:
 
             print(f"Okay. here is the minute you entered which corresponds with the selected hour: {'{:}'.format(minuteInput)}")
-        else:
-            print("Please enter a minute between 0 and 59 which corresponds with the selected hour")
+        #else:
+            #minuteInput = int(input("Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour"))
 
         #militaryTime = str(hourInput + minuteInput)
         #print(militaryTime)
@@ -538,3 +546,20 @@ if userInput == '0':
 
 else:
     "Sorry, incorrect selection. Please read the prompt again.\n"
+
+
+
+#
+# userInput2 = int(input("Would you like to check the status of all packages for another time?\n"
+#                        "Press 1 to enter another time\n"
+#                        "Press 0 to close the program.\n"))
+#
+# if userInput2 == '1':
+#     userInput = '1'
+#     hourInput = int(input(
+#         "Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
+#         "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
+#
+# if userInput2 == '0':
+#     print(f"Goodbye\n")
+#     exit()
