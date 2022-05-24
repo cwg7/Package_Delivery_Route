@@ -477,6 +477,16 @@ userInput = input("Press 1 to check shipping status of all packages at a given t
                   #"Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
                   "Or press 0 to close the program\n")
 
+if userInput == '0':
+    print("Goodbye")
+    exit()
+
+while userInput != '0' and userInput != '1':
+    print(f"Sorry incorrect selection. \n")
+    userInput = input("Press 1 to check shipping status of all packages at a given time.\n"
+                      # "Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
+                      "Or press 0 to close the program\n")
+
 if userInput == '1':
 
     hourInput = int(input("Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
