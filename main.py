@@ -4,7 +4,7 @@ import datetime
 
 print("\n\n")
 print(f"Welcome to the WGUPS Package Delivery Route Optimizer!\n")
-print("Please scroll to the bottom for user options\n")
+print("Please scroll down to the bottom for user options\n")
 print(f"Here is a simulation of all deliveries for today:\n")
 
 
@@ -244,7 +244,7 @@ def deliveryTruck1():
         minPackage.delivery_time = timeAtDelivery
 
 
-        #minPackage.status = 'delivered'
+
 
 
 
@@ -432,134 +432,104 @@ totalTruck3Miles = deliveryTruck3()
 finalTotTruckMiles = totalTruck1Miles + totalTruck2Miles + totalTruck3Miles
 
 
-
-print(f"______________________________________________________________________________________________________________")
-print(f"_____________________________________________________________________________________________________________\n")
-
-print(f"Total miles on all trucks combined at end of day: {'{:,.2f}'.format(finalTotTruckMiles)}")
-print("_______________________________________________________________________________________________________________")
-print("_______________________________________________________________________________________________________________\n")
-# output all packages from 1 to 40
-
-print("Package ID    Address        City        State    Zip    Deadline     Weight    Notes     Delivery Time      Time Left Hub")
-print("___________________________________________________________________________________________________________________________")
-
-# The time complexity here is O(n)
-
-for i in range(1,41):
-    package = packageHashTable.search(i)
-    print(package)
-
-
-
-    #print status
-
-# LOOK AT TIME LEFT HUB AND DELIVERY TIME RELATIVE TO USER INPUT
-# PRINT OUT STATUS 'AT HUB, EN ROUTE, OR DELIVERED
-#
-
-#def package_status(userInputTime):
-
-#userTimeInput =
-
-#Compare user time with
-
 print(f"\n\n\n")
 
-userInput = input("Press 1 to check shipping status of all packages at a given time.\n"
-                  #"Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
-                  "Or press 0 to close the program\n")
 
-if userInput == '0':
-    print("Goodbye")
-    exit()
+def generateStatusReport():
 
-while userInput != '0' and userInput != '1':
-    print(f"Sorry incorrect selection. \n")
     userInput = input("Press 1 to check shipping status of all packages at a given time.\n"
-                      # "Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
+                      #"Press 2 to check the shipping status of a specific package by Package ID\n" # not sure about this one. Is it neccessary
                       "Or press 0 to close the program\n")
 
-if userInput == '1':
+    if userInput == '0':
+        print("Goodbye")
+        exit()
 
-    hourInput = int(input("Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
-                          "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
+    # time complexity here is technically O(n)
+    while userInput != '0' and userInput != '1':
+        print(f"Sorry incorrect selection. \n")
+        userInput = input("Press 1 to check shipping status of all packages at a given time.\n"
+                          "Or press 0 to close the program\n")
 
-    while hourInput < 8 or hourInput >= 17:
-        hourInput = int(input("Sorry. Incorrect selection. Business hours are 8am - 5pm. Please select an hour during business hours (ie 8-16)\n"))
+    if userInput == '1':
 
-    # if hourInput < 8:
-    #     print("Deliveries don't start until 8:00 am")
-    # elif hourInput > 17:
-    #     print("Hour selected is outside of business hours\n")
-    #     print(f"Please select an hour between 8am and 5pm")
+        hourInput = int(input("Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time (0800 - 1700).\n"
+                              "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
 
-    #elif hourInput >= 8 & hourInput <= 17:
-    if hourInput >= 8 & hourInput < 17:
+        # time complexity here is technically O(n)
+        while hourInput < 8 or hourInput >= 17:
+            hourInput = int(input("Sorry. Incorrect selection. Business hours are 8am - 5pm (0800 - 1700). Please select an hour during business hours (ie 8-16)\n"))
 
-        print(f"Okay. here is the hour you entered: {'{:}'.format(hourInput)}")
-        minuteInput = int(input("Please enter a minute between 0 and 59\n"))
+        if hourInput >= 8 & hourInput < 17:
 
-        while minuteInput < 0 or minuteInput > 59:
-            minuteInput = int(input(
-                "Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour\n"))
+            print(f"Okay. here is the hour you entered: {'{:}'.format(hourInput)}")
+            minuteInput = int(input("Please enter a minute between 0 and 59\n"))
 
-        if minuteInput >=0 & minuteInput <= 59:
+            # time complexity here is technically O(n)
+            while minuteInput < 0 or minuteInput > 59:
+                minuteInput = int(input(
+                    "Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour\n"))
 
-            print(f"Okay. here is the minute you entered which corresponds with the selected hour: {'{:}'.format(minuteInput)}")
-        #else:
-            #minuteInput = int(input("Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour"))
+            if minuteInput >=0 & minuteInput <= 59:
 
-        #militaryTime = str(hourInput + minuteInput)
-        #print(militaryTime)
-        inputTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
-                                        datetime.date.today().day, hourInput, minuteInput, 00, 00)
+                print(f"Okay. here is the minute you entered which corresponds with the selected hour: {'{:}'.format(minuteInput)}\n")
 
-        print(f"Excellent. User-time selected. Searching for delivery status of all packages at {'{:}'.format(inputTime)}\n")
+                print(f"Generating delivery status report...")
+                print("___________________________________________________________________________________________________________\n\n\n")
+            #else:
+                #minuteInput = int(input("Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour"))
 
-
-        for i in range(1, 41):
-            package = packageHashTable.search(i)
-
-            if inputTime < package.time_left_hub:
-                package.status = 'at hub'
-            elif inputTime > package.time_left_hub and inputTime < package.delivery_time:
-                package.status = 'en route'
-            elif inputTime > package.delivery_time:
-                package.status = 'delivered'
-
-            # elif package.delivery_time < inputTime & package.time_left_hub:
-            #     package.status = 'en route'
-
-            print(f"Time:  {'{:}'.format(inputTime)}")
-            print(f"Package ID        Delivery Status")
-            print(f"______________________________________")
-
-            print(f"{'{:,}'.format(package.packageID)}: "+ "               " + package.status)
-            print(f"______________________________________")
-            print(f"______________________________________\n")
-            #print(package.status)
-
-if userInput == '0':
-    print("Goodbye")
-    exit()
-
-else:
-    "Sorry, incorrect selection. Please read the prompt again.\n"
+            #militaryTime = str(hourInput + minuteInput)
+            #print(militaryTime)
+            inputTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
+                                            datetime.date.today().day, hourInput, minuteInput, 00, 00)
 
 
+    for i in range(1, 41):
+        package = packageHashTable.search(i)
 
-#
-# userInput2 = int(input("Would you like to check the status of all packages for another time?\n"
-#                        "Press 1 to enter another time\n"
-#                        "Press 0 to close the program.\n"))
-#
-# if userInput2 == '1':
-#     userInput = '1'
-#     hourInput = int(input(
-#         "Excellent. What hour would you like to check various status of packages? Please choose an hour between 8:00 am and 5:00 pm (Business hours) in military time.\n"
-#         "For example, if you want to see the status of all packages at 2pm (ie 1400), please enter 14 \n"))
-#
-# if userInput2 == '0':
-#     print(f"Goodbye\n")
-#     exit()
+        if inputTime < package.time_left_hub:
+            package.status = 'at hub'
+        elif inputTime > package.time_left_hub and inputTime < package.delivery_time:
+            package.status = 'en route'
+        elif inputTime > package.delivery_time:
+            package.status = 'delivered'
+
+    print(f"Time selected: {'{:}'.format(inputTime)}")
+    print("Package ID    Address        City        State    Zip    Deadline     Weight    Notes     Delivery Time      Time Left Hub      Delivery Status")
+    print("_____________________________________________________________________________________________________________________________________________")
+
+    for i in range(1, 41):
+        package = packageHashTable.search(i)
+        print(package)
+
+    print("\n\n")
+
+    for i in range(1,41):
+        package = packageHashTable.search(i)
+        print(f"Time: {'{:}'.format(inputTime)}       Delivery Status")
+        print(f"______________________________________________________")
+        print(f"Package ID: {'{:}'.format(package.packageID)}   -->             {'{:}'.format(package.status)}")
+        print("______________________________________________________")
+        print(f"______________________________________________________\n")
+
+    userInput1 = input("Please enter 1 if you'd like to check the status of all packages for another time\n"
+                           "Or press 0 to exit the program\n")
+
+    if userInput1 == '0':
+        print("Goodbye")
+        exit()
+
+    while userInput1 != '1' and userInput1 != '0':
+        print("Sorry. Incorrect selection.\n")
+        userInput1 = input("Please enter 1 if you'd like to check the status of all packages for different time\n"
+                           "Or press 0 to exit the program\n")
+    if userInput1 == '1':
+
+        generateStatusReport()
+
+
+
+
+
+generateStatusReport()

@@ -24,7 +24,7 @@ class Package:
 
 
     def __str__(self):
-       return "   " + str(self.packageID) + "     " + self.address + ",  " + self.city + ", " +self.state + ", " + str(self.zip) +", " + self.deadline +", " +str(self.weight)  +" Kgs" + ", " + self.notes + ", " +str(self.delivery_time) + ", " + str(self.time_left_hub)
+       return "   " + str(self.packageID) + "     " + self.address + ",  " + self.city + ", " +self.state + ", " + str(self.zip) +", " + self.deadline +", " +str(self.weight)  +" Kgs" + ", " + self.notes + ", " +str(self.delivery_time) + ", " + str(self.time_left_hub) + ", " + str(self.status)
 
     # def __str__(self):
     #     return "%s, %s, %s, %s, %s, %s, %s, %s"  (
