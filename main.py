@@ -100,8 +100,6 @@ packageHashTable.insert(38, p38)
 packageHashTable.insert(39, p39)
 packageHashTable.insert(40, p40)
 
-
-
 #This 2d array of distances represents distances in miles between delivery location as well as the WGUPS hub
 # The space complexity and time complexity is O(n^2) for this 2d array
 
@@ -197,8 +195,6 @@ addressDictionary = {'4001 South 700 East': 0,
 #WGUPS hub address
 hub = '4001 South 700 East'
 
-
-
 #This look-up function returns a distance in miles between two locations
 # The time complexity for this function is O(n) because it uses a dictionary
 
@@ -208,7 +204,6 @@ def lookupDistance(address1: object, address2: object) -> object:
     column = addressDictionary[address2]
     distanceAtRowAndColumn = distances2dArray[row][column]
     return distanceAtRowAndColumn
-
 
 truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
 hub = '4001 South 700 East'
@@ -221,7 +216,6 @@ def deliveryTruck1():
     truckMiles = 0
     truck1StartTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
                                         datetime.date.today().day, 8, 00, 00, 00)
-    #currentTime = truck1StartTime
 
     for packageID in truck1:
         package = packageHashTable.search(packageID)
@@ -236,29 +230,15 @@ def deliveryTruck1():
             package = packageHashTable.search(packageID)
             distance = lookupDistance(currentAddress,package.address)
 
-
-
             if distance < minDistance:
                 minDistance = distance
                 minPackage = package
 
         timeBetweenStops = datetime.timedelta(minutes=+(minDistance / .3))
-
         timeAtDelivery = truck1StartTime + timeBetweenStops
-
         minPackage.delivery_time = timeAtDelivery
-
-
-
-
-
-
-
-
         truckMiles += minDistance
         currentAddress = minPackage.address
-
-
         truck1.remove(minPackage.packageID)
 
         print(f"Current Package ID: {'{:,}'.format(minPackage.packageID)}")
@@ -267,13 +247,10 @@ def deliveryTruck1():
         print(f"Total miles on truck 1: {'{:,.2f}'.format(truckMiles)}\n")
         truck1StartTime = timeAtDelivery
 
-
-
     distanceToHub = lookupDistance(minPackage.address,hub)
     totMilesTruck1 = truckMiles + distanceToHub
     returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
     hubArrivalTime = truck1StartTime + returnTime
-
 
     print(f"Total miles on truck 1 before trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
     print("Truck 1 is empty and back at hub\n")
@@ -289,7 +266,6 @@ totalTruck1Miles = deliveryTruck1()
 
 print("_______________________________________________________________________________________________________________")
 print("_______________________________________________________________________________________________________________\n")
-
 
 truck2 = [3,18,38,6,7,36,2,4,5,8,10,11,25]
 hub = '4001 South 700 East'
@@ -307,9 +283,6 @@ def deliveryTruck2():
         package = packageHashTable.search(packageID)
         package.time_left_hub = truck2StartTime
 
-
-
-
     while len(truck2) > 0:
         minDistance = 9999999
 
@@ -318,22 +291,16 @@ def deliveryTruck2():
             #package.time_left_hub = truck2StartTime
             distance = lookupDistance(currentAddress,package.address)
 
-
-
             if distance < minDistance:
                 minDistance = distance
                 minPackage = package
 
         timeBetweenStops = datetime.timedelta(minutes=+(minDistance / .3))
-
         timeAtDelivery = truck2StartTime + timeBetweenStops
-
         minPackage.delivery_time = timeAtDelivery
-
         truckMiles += minDistance
         currentAddress = minPackage.address
         truck2.remove(minPackage.packageID)
-
         distanceToHub = lookupDistance(minPackage.address, hub)
         totMilesTruck2 = truckMiles + distanceToHub
         returnTime = datetime.timedelta(minutes=+(distanceToHub / .3))
@@ -346,9 +313,6 @@ def deliveryTruck2():
 
         truck2StartTime = timeAtDelivery
 
-
-
-
     print(f"Total miles on truck 2 BEFORE trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
     print("Truck 2 is empty and back at the hub \n")
     print(f"Truck 2 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
@@ -356,15 +320,9 @@ def deliveryTruck2():
 
     return totMilesTruck2
 
-
-
 print(f"TRUCK 2 DELIVERIES:\n\n")
 
-
-
 totalTruck2Miles = deliveryTruck2()
-
-
 
 print(f"_____________________________________________________________________________________________________________")
 print(f"_____________________________________________________________________________________________________________\n")
@@ -390,8 +348,6 @@ def deliveryTruck3():
 
         for packageID in truck3:
             package = packageHashTable.search(packageID)
-
-
             distance = lookupDistance(currentAddress, package.address)
 
             if distance < minDistance:
@@ -399,9 +355,7 @@ def deliveryTruck3():
                 minPackage = package
 
         timeBetweenStops = datetime.timedelta(minutes=+(minDistance / .3))
-
         timeAtDelivery = truck3StartTime + timeBetweenStops
-
         minPackage.delivery_time = timeAtDelivery
 
         truckMiles += minDistance
@@ -419,8 +373,6 @@ def deliveryTruck3():
         print(f"Total miles on truck 3: {'{:,.2f}'.format(truckMiles)}\n")
         truck3StartTime = timeAtDelivery
 
-
-
     print(f"Total miles on truck 3 BEFORE trip back to hub: {'{:,.2f}'.format(truckMiles)}\n")
     print("Truck 3 is empty and back at the hub \n")
     print(f"Truck 3 Hub arrival time: {hubArrivalTime:%Y-%m-%d %H:%M}\n")
@@ -433,14 +385,11 @@ print(f"TRUCK 3 DELIVERIES:\n")
 
 totalTruck3Miles = deliveryTruck3()
 
-
-
 finalTotTruckMiles = totalTruck1Miles + totalTruck2Miles + totalTruck3Miles
 print(f"_____________________________________________________________________________________________________________________\n")
 print(f"Total miles on all trucks at end of the day once all trucks are back at hub: {'{:,.2f}'.format(finalTotTruckMiles)}\n")
 print(f"_____________________________________________________________________________________________________________________\n")
 print(f"\n\n\n")
-
 
 def generateStatusReport():
 
@@ -483,11 +432,7 @@ def generateStatusReport():
 
                 print(f"Generating delivery status report...")
                 print("___________________________________________________________________________________________________________\n\n\n")
-            #else:
-                #minuteInput = int(input("Sorry. Incorrect selection. Please enter a minute between 0 and 59 which corresponds with the selected hour"))
 
-            #militaryTime = str(hourInput + minuteInput)
-            #print(militaryTime)
             inputTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
                                             datetime.date.today().day, hourInput, minuteInput, 00, 00)
 
@@ -534,9 +479,5 @@ def generateStatusReport():
     if userInput1 == '1':
 
         generateStatusReport()
-
-
-
-
 
 generateStatusReport()
