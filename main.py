@@ -1,3 +1,6 @@
+#Chase Gilreath
+#Student ID: 001187957
+
 from Package import Package
 from HashTable import HashTable
 import datetime
@@ -8,6 +11,7 @@ print("Please scroll down to the bottom for user options\n")
 print(f"Here is a simulation of all deliveries for today:\n")
 
 
+#Creation of 40 package objects
 
 p1 = Package(1,'195 W Oakland Ave','Salt Lake City','UT',84115,'10:30 AM',21,'')
 p2 = Package(2,'2530 S 500 E','Salt Lake City','UT',84106,'EOD',44,'')
@@ -50,7 +54,7 @@ p38 = Package(38,'410 S State St','Salt Lake City','UT',84111,'EOD',9,'Can only 
 p39 = Package(39,'2010 W 500 S','Salt Lake City','UT',84104,'EOD',9,'')
 p40 = Package(40,'380 W 2880 S','Salt Lake City','UT',84115,'10:30 AM',45,'')
 
-
+#Instantiates new hash table (w/ package objects)
 # The space complexity for this hash table is O(n)
 
 packageHashTable = HashTable()
@@ -98,7 +102,7 @@ packageHashTable.insert(40, p40)
 
 
 
-
+#This 2d array of distances represents distances in miles between delivery location as well as the WGUPS hub
 # The space complexity and time complexity is O(n^2) for this 2d array
 
 distances2dArray = [
@@ -158,6 +162,7 @@ distances2dArray = [
      3.1, 7.8, 1.3, 8.3, 0]
 ]
 
+#This dictionary stores a list of all delivery address, as well as the WGUPS hub
 # The space complexity for this dictionary is O(n)
 
 addressDictionary = {'4001 South 700 East': 0,
@@ -189,10 +194,12 @@ addressDictionary = {'4001 South 700 East': 0,
                '6351 South 900 East': 26
                      }
 
+#WGUPS hub address
 hub = '4001 South 700 East'
 
 
 
+#This look-up function returns a distance in miles between two locations
 # The time complexity for this function is O(n) because it uses a dictionary
 
 def lookupDistance(address1: object, address2: object) -> object:
@@ -228,8 +235,6 @@ def deliveryTruck1():
 
             package = packageHashTable.search(packageID)
             distance = lookupDistance(currentAddress,package.address)
-
-
 
 
 
@@ -361,7 +366,7 @@ totalTruck2Miles = deliveryTruck2()
 
 
 
-print(f"______________________________________________________________________________________________________________")
+print(f"_____________________________________________________________________________________________________________")
 print(f"_____________________________________________________________________________________________________________\n")
 
 truck3 = [39,9,35,33,27,26,24,23,22,21,17,12,28,32]
@@ -429,9 +434,11 @@ print(f"TRUCK 3 DELIVERIES:\n")
 totalTruck3Miles = deliveryTruck3()
 
 
+
 finalTotTruckMiles = totalTruck1Miles + totalTruck2Miles + totalTruck3Miles
-
-
+print(f"_____________________________________________________________________________________________________________________\n")
+print(f"Total miles on all trucks at end of the day once all trucks are back at hub: {'{:,.2f}'.format(finalTotTruckMiles)}\n")
+print(f"_____________________________________________________________________________________________________________________\n")
 print(f"\n\n\n")
 
 
