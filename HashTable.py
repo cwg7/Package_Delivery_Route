@@ -19,6 +19,8 @@ class HashTable:
         bucket_list.append(item)
     '''
 
+    #This function allows objects to be inserted and updated in the hash table
+
     def insert(self, key, item):  # does both insert and update. Time complexity is O(1)
         # get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
@@ -56,6 +58,8 @@ class HashTable:
             return None
     '''
 
+    # This function searches for items in the hash table based on the item's key
+
     def search(self, key):
         # get the bucket list where this key would be. Time complexity is O(N)
         bucket = hash(key) % len(self.table)
@@ -80,6 +84,8 @@ class HashTable:
         if key in bucket_list:
             bucket_list.remove(key)
     '''
+
+    # Function removes items from the hash table based on an item's key
 
     def remove(self, key):
         # get the bucket list where this item will be removed from.  Time complexity is O(1)

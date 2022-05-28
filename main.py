@@ -10,8 +10,16 @@ print(f"Welcome to the WGUPS Package Delivery Route Optimizer!\n")
 print("Please scroll down to the bottom for user options\n")
 print(f"Here is a simulation of all deliveries for today:\n")
 
+#Process/flow comment: Upon running the application, after the initial welcome greeting, the user is presented a simulated print-out of all deliveries
+# via all three trucks chosen to deliver the packages. Just below that simulation is a print-out of the total mileage on all trucks once all packages
+# have been delivered.
+# After that, the user is given some options regarding package status info. The first option is to view package status of all packages given a user-selected time
+
+# The next option is the ability to search the package status of a particular package by package ID, (((((which I have yet to implement))))))
+# Lastly, the user can select 0 upon being prompted to close the program
 
 #Creation of 40 package objects
+# Here 40 package objects are created and will next be inserted into the hash table
 
 p1 = Package(1,'195 W Oakland Ave','Salt Lake City','UT',84115,'10:30 AM',21,'')
 p2 = Package(2,'2530 S 500 E','Salt Lake City','UT',84106,'EOD',44,'')
@@ -58,6 +66,8 @@ p40 = Package(40,'380 W 2880 S','Salt Lake City','UT',84115,'10:30 AM',45,'')
 # The space complexity for this hash table is O(n)
 
 packageHashTable = HashTable()
+
+#Here the package objects are inserted into the hash table
 
 packageHashTable.insert(1, p1)
 packageHashTable.insert(2, p2)
@@ -390,6 +400,12 @@ print(f"________________________________________________________________________
 print(f"Total miles on all trucks at end of the day once all trucks are back at hub: {'{:,.2f}'.format(finalTotTruckMiles)}\n")
 print(f"_____________________________________________________________________________________________________________________\n")
 print(f"\n\n\n")
+
+#Upon running the program, the user is presented with the simulated deliveries of all packaged, which is encapsulated in the three functions above; one for each truck
+
+
+
+#This is the user-interface aspect of the program, and the first instance of the user being given options via user-input
 
 def generateStatusReport():
 
