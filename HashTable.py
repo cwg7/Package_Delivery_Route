@@ -1,3 +1,5 @@
+# This is the HashTable Class
+
 class HashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.

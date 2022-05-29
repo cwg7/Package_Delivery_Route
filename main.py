@@ -10,7 +10,7 @@ print(f"Welcome to the WGUPS Package Delivery Route Optimizer!\n")
 print("Please scroll down to the bottom for user options\n")
 print(f"Here is a simulation of all deliveries for today:\n")
 
-#Process/flow comment: Upon running the application, after the initial welcome greeting, the user is presented a simulated print-out of all deliveries
+#Process/flow comment (C.2): Upon running the application, after the initial welcome greeting, the user is presented a simulated print-out of all deliveries
 # via all three trucks chosen to deliver the packages. Just below that simulation is a print-out of the total mileage on all trucks once all packages
 # have been delivered.
 # After that, the user is given some options regarding package status info. The first option is to view package status of all packages given a user-selected time
@@ -206,6 +206,7 @@ addressDictionary = {'4001 South 700 East': 0,
 hub = '4001 South 700 East'
 
 #This look-up function returns a distance in miles between two locations
+# This function gets called during the truck deliveries, and is the mechanism by which the nearest-neighbor algorithm is implemented
 # The time complexity for this function is O(n) because it uses a dictionary
 
 def lookupDistance(address1: object, address2: object) -> object:
@@ -218,6 +219,9 @@ def lookupDistance(address1: object, address2: object) -> object:
 truck1 = [1,13,14,15,19,16,20,29,30,31,34,37,40]
 hub = '4001 South 700 East'
 
+
+#This is the first function which runs upon running the program. It is the beginning of the package delivery simulation process
+# and uses a nearest-neighbor algorithm to find a near-optimal delivery route for truck1
 # The time complexity for this function is O(n^2)
 
 def deliveryTruck1():
@@ -280,6 +284,9 @@ print("_________________________________________________________________________
 truck2 = [3,18,38,6,7,36,2,4,5,8,10,11,25]
 hub = '4001 South 700 East'
 
+
+#This is the second function which is called upon running the program. It is part of the package delivery simulation process
+# and uses a nearest-neighbor algorithm to find a near-optimal delivery route for truck2
 # The time complexity for this function is O(n^2)
 
 def deliveryTruck2():
@@ -340,6 +347,8 @@ print(f"________________________________________________________________________
 truck3 = [39,9,35,33,27,26,24,23,22,21,17,12,28,32]
 hub = '4001 South 700 East'
 
+#This is the third function which is called upon running the program. It is part of the package delivery simulation process
+# and uses a nearest-neighbor algorithm to find a near-optimal delivery route for truck3
 # The time complexity for this function is O(n^2)
 
 def deliveryTruck3():
@@ -395,6 +404,9 @@ print(f"TRUCK 3 DELIVERIES:\n")
 
 totalTruck3Miles = deliveryTruck3()
 
+
+#After truck3 deliveries are completed, a total mileage of all trucks combined once all deliveries are complete is printed out at the bottom of the delivery simulation
+
 finalTotTruckMiles = totalTruck1Miles + totalTruck2Miles + totalTruck3Miles
 print(f"_____________________________________________________________________________________________________________________\n")
 print(f"Total miles on all trucks at end of the day once all trucks are back at hub: {'{:,.2f}'.format(finalTotTruckMiles)}\n")
@@ -406,6 +418,7 @@ print(f"\n\n\n")
 
 
 #This is the user-interface aspect of the program, and the first instance of the user being given options via user-input
+# This UI element runs after and below the delivery simulation, and allows the user to get package status info at any given time during business hours
 
 def generateStatusReport():
 
@@ -452,7 +465,7 @@ def generateStatusReport():
             inputTime = datetime.datetime(datetime.date.today().year, datetime.date.today().month,
                                             datetime.date.today().day, hourInput, minuteInput, 00, 00)
 
-
+    # This for loop has a time complexity of O(n)
     for i in range(1, 41):
         package = packageHashTable.search(i)
 
@@ -467,12 +480,14 @@ def generateStatusReport():
     print("Package ID    Address        City        State    Zip    Deadline     Weight    Notes     Delivery Time      Time Left Hub      Delivery Status")
     print("_____________________________________________________________________________________________________________________________________________")
 
+    # This for loop has a time complexity of O(n)
     for i in range(1, 41):
         package = packageHashTable.search(i)
         print(package)
 
     print("\n\n")
 
+    # This for loop has a time complexity of O(n)
     for i in range(1,41):
         package = packageHashTable.search(i)
         print(f"Time: {'{:}'.format(inputTime)}       Delivery Status")
@@ -488,6 +503,7 @@ def generateStatusReport():
         print("Goodbye")
         exit()
 
+    # This while loop technically has a time complexity of O(n)
     while userInput1 != '1' and userInput1 != '0':
         print("Sorry. Incorrect selection.\n")
         userInput1 = input("Please enter 1 if you'd like to check the status of all packages for different time\n"
